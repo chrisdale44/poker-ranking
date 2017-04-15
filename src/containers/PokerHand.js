@@ -3,17 +3,20 @@ import * as _ from 'lodash';
 import styled from 'styled-components';
 import * as constants from '../constants/constants';
 import Card from '../components/Card';
+import HandRank from '../components/HandRank';
 
 const PokerHand = styled.div`
   text-align: center;
 `;
 
-// class PokerHand {
-// 	constructor(hand) {
-// 		Object.assign( this, this.parseHand(hand) );
-// 		this.rank = this.rankHand();
-// 		console.log(constants.HANDRANKS[this.rank]);
-// 	}
+const cardDefaults = [
+    // [value, suit]
+    {value: constants.VALUES[0], suit: constants.SUITS[0]},
+    {value: constants.VALUES[1], suit: constants.SUITS[0]},
+    {value: constants.VALUES[2], suit: constants.SUITS[0]},
+    {value: constants.VALUES[3], suit: constants.SUITS[0]},
+    {value: constants.VALUES[4], suit: constants.SUITS[0]},
+];
 	
 
 
@@ -182,193 +185,209 @@ const PokerHand = styled.div`
 // };
 
 class PokerHandContainer extends Component {
-
-// 	parseHand(hand) {
-// 		try {
-// 			// Validate the input
-// 			if (!hand) {
-// 				throw "No hand specified";
-// 			}
-
-// 			// Split cards into array
-// 			var cardsArray = hand.split(" ");
-
-// 			if (cardsArray.length !== 5) {
-// 				throw "Invalid number of cards";
-// 			}
-
-// 			var values = [],
-// 				suits = [];
-
-// 			// Loop over the cards array and split value and suit into separate arrays
-// 			cardsArray.forEach(function(card, i) {
-// 				if (_.includes(constants.VALUESLIST, card[0]) && _.includes(constants.SUITSLIST, card[1])) {
-// 					// It is not important to keep value and suit related as the only 
-// 					// time suit comes into play is if all 5 cards are of one suit
-// 					values.push(card[0]);
-// 					suits.push(card[1]);
-// 				} else {
-// 					throw "Invalid card: " + card;
-// 				}
-// 			});
-
-// 			// Sort values numerically
-// 			return { 
-// 				values: this.sortValuesNumerically(values), 
-// 				suits: suits 
-// 			};
-// 		}
-// 		catch(err) {
-// 			console.log(err);
-// 		}
-// 	}
-
-// 	sortValuesNumerically(values) {
-// 		function sortNumber(a,b) {
-// 			// use index of the VALUESLIST 
-// 			return constants.VALUESLIST.indexOf(a) - constants.VALUESLIST.indexOf(b);
-// 		}
-
-// 		return values.sort(sortNumber);
-// 	}
-
-// 	rankHand() {
-// 		var _this = this,
-// 			matchingValues = _.countBy(this.values),
-// 			straight_next_i,
-// 			hand_next_i,
-// 			rank;
-
-// 		this.flush = false;
-// 		this.straight = false;
-// 		this.pairs = [];
-// 		this.threes = [];
-// 		this.fours = [];
-
-// 		// if all 5 cards are of the same suit set flush flag to true
-// 		this.flush = ((_.size(_.countBy(_this.suits)) === 1) ? true : false);
-
-// 		// if we have a flush then there won't be any pairs, so skip this
-// 		if (!this.flush) {
-// 			// push any pairs / three of a kinds / four of a kinds
-// 			// to their respective arrays
-// 			_.forOwn(matchingValues, function(v, k) {
-// 				switch(v) {
-// 					case 2:
-// 						// pair
-// 						_this.pairs.push(k);
-// 						break;
-// 					case 3:
-// 						// three of a kind
-// 						_this.threes.push(k);
-// 						break;
-// 					case 4:
-// 						// four of a kind
-// 						_this.fours.push(k);
-// 						break;
-// 					default:
-// 						// do nothing
-// 						break;
-// 				}
-// 			});
-// 		}
-
-// 		// if any pairs were found then we already know we don't have a straight, so skip this
-// 		if (!this.pairs.length || !this.threes.length || !this.fours.length) {
-// 			// set flag to true, until we prove otherwise
-// 			this.straight = true;
-
-// 			// Loop over the hand and check the sequence of values for a valid straight
-// 			this.values.forEach(function(value, i) {
-// 				// don't perform this validation on the last card in the hand
-// 				if (i >= (_this.values.length-1)) {
-// 					return false;
-// 				}
-// 				// Get the index of the next value of the straight
-// 				straight_next_i =  constants.VALUESLIST.indexOf(value) + 1;
-// 				// and the index of the next value in the hand
-// 				hand_next_i = constants.VALUESLIST.indexOf(_this.values[i+1]);
-
-// 				// if the next value of the straight is not equal to the next value in our hand
-// 				// then it is not a straight
-// 				if (hand_next_i !== straight_next_i) {
-// 					// straights going 2 3 4 5 should also allow Aces to make a straight
-// 					if (i === 3 && straight_next_i === 4 && hand_next_i === (constants.VALUESLIST.length - 1)) {
-// 						return false;
-// 					}
-// 					_this.straight = false;
-// 					return false;
-// 				}
-// 			});
-// 		}
-
-// 		if (this.straight) {
-// 			// if we have a 5 high straight (2 3 4 5 A), we need to re-order it
-// 			if (this.values[0] === "2" && this.values[4] === "A") {
-// 				// Push the ace to the beginning of the straight
-// 				this.values.unshift(this.values.pop());
-// 			}
-// 		}
-
-// 		// determine the hand
-// 		if (this.pairs.length === 1 && !this.threes.length) {
-// 			// pair
-// 			rank = 1;
-// 		} else if (this.pairs.length === 2) {
-// 			// two pair
-// 			rank = 2;
-// 		} else if (this.threes.length && !this.pairs.length) {
-// 			// three of a kind
-// 			rank = 3;
-// 		}  else if (this.straight && !this.flush) {
-// 			// straight
-// 			rank = 4;
-// 		} else if (this.flush && !this.straight) {
-// 			// flush
-// 			rank = 5;
-// 		} else if (this.pairs.length && this.threes.length) {
-// 			// full house
-// 			rank = 6;
-// 		} else if (this.fours.length) {
-// 			// four of a kind
-// 			rank = 7;
-// 		} else if (this.flush && this.straight) {
-// 			// straight flush
-// 			rank = 8;
-// 			if (this.values[3] === constants.VALUESLIST[constants.VALUESLIST.length-2]) {
-// 				// royal flush
-// 				rank = 9;
-// 			}
-// 		} else {
-// 			// high card
-// 			rank = 0;
-// 		}
-// 		return rank;
-// 	}
-
     constructor(props) {
         super();
+        const { rank, flush, straight, pairs, threes, fours } = this.rankHand(cardDefaults);
+
         this.state = {
-            cards: [
-                // [value, suit]
-                {value: constants.VALUES[0], suit: constants.SUITS[0]},
-                {value: constants.VALUES[1], suit: constants.SUITS[0]},
-                {value: constants.VALUES[2], suit: constants.SUITS[0]},
-                {value: constants.VALUES[3], suit: constants.SUITS[0]},
-                {value: constants.VALUES[4], suit: constants.SUITS[0]},
-            ]
+            cards: cardDefaults,
+            rank: rank,
+            flush: flush,
+            straight: straight,
+            pairs: pairs,
+            threes: threes,
+            fours: fours
         };
     }
 
+    rankHand(hand) {
+        let { values, suits } = this.parseHand(hand);
+		
+        var matchingValues = _.countBy(values),
+			straight_next_i,
+			hand_next_i,
+			rank;
+
+		let flush = false,
+            straight = false,
+            pairs = [],
+            threes = [],
+            fours = [];
+
+		// if all 5 cards are of the same suit set flush flag to true
+		flush = ((_.size(_.countBy(suits)) === 1) ? true : false);
+
+		// if we have a flush then there won't be any pairs, so skip this
+		if (!flush) {
+			// push any pairs / three of a kinds / four of a kinds
+			// to their respective arrays
+			_.forOwn(matchingValues, function(v, k) {
+				switch(v) {
+					case 2:
+						// pair
+						pairs.push(k);
+						break;
+					case 3:
+						// three of a kind
+						threes.push(k);
+						break;
+					case 4:
+						// four of a kind
+						fours.push(k);
+						break;
+					default:
+						// do nothing
+						break;
+				}
+			});
+		}
+
+		// if any pairs were found then we already know we don't have a straight, so skip this
+		if (!pairs.length || !threes.length || !fours.length) {
+			// set flag to true, until we prove otherwise
+			straight = true;
+
+			// Loop over the hand and check the sequence of values for a valid straight
+			values.forEach(function(value, i) {
+				// don't perform this validation on the last card in the hand
+				if (i >= (values.length-1)) {
+					return false;
+				}
+				// Get the index of the next value of the straight
+				straight_next_i =  constants.VALUES.indexOf(value) + 1;
+				// and the index of the next value in the hand
+				hand_next_i = constants.VALUES.indexOf(values[i+1]);
+
+				// if the next value of the straight is not equal to the next value in our hand
+				// then it is not a straight
+				if (hand_next_i !== straight_next_i) {
+					// straights going 2 3 4 5 should also allow Aces to make a straight
+					if (i === 3 && straight_next_i === 4 && hand_next_i === (constants.VALUES.length - 1)) {
+						return false;
+					}
+					straight = false;
+					return false;
+				}
+			});
+		}
+
+		if (straight) {
+			// if we have a 5 high straight (2 3 4 5 A), we need to re-order it
+			if (values[0] === "2" && values[4] === "A") {
+				// Push the ace to the beginning of the straight
+				values.unshift(values.pop());
+			}
+		}
+
+		// determine the hand
+		if (pairs.length === 1 && !threes.length) {
+			// pair
+			rank = 1;
+		} else if (pairs.length === 2) {
+			// two pair
+			rank = 2;
+		} else if (threes.length && !pairs.length) {
+			// three of a kind
+			rank = 3;
+		}  else if (straight && !flush) {
+			// straight
+			rank = 4;
+		} else if (flush && !straight) {
+			// flush
+			rank = 5;
+		} else if (pairs.length && threes.length) {
+			// full house
+			rank = 6;
+		} else if (fours.length) {
+			// four of a kind
+			rank = 7;
+		} else if (flush && straight) {
+			// straight flush
+			rank = 8;
+			if (values[3] === constants.VALUES[constants.VALUES.length-2]) {
+				// royal flush
+				rank = 9;
+			}
+		} else {
+			// high card
+			rank = 0;
+		}
+		return {
+            rank: rank,
+            flush: flush,
+            straight: straight,
+            pairs: pairs,
+            threes: threes,
+            fours: fours
+        };
+	}
+
+    // Function to take PokerHand object and return arrays of values and suits
+    // as this makes life easier when ranking hands
+	parseHand(hand) {
+		try {
+			// Validate the input
+			if (!hand) {
+				throw "No hand specified";
+			}
+
+			if (hand.length !== 5) {
+				throw "Invalid number of cards";
+			}
+
+			var values = [],
+				suits = [];
+
+			// Loop over the cards array and split value and suit into separate arrays
+			hand.forEach(function(card, i) {
+				if (_.includes(constants.VALUES, card.value) && _.includes(constants.SUITS, card.suit)) {
+					// It is not important to keep value and suit related as the only 
+					// time suit comes into play is if all 5 cards are of one suit
+					values.push(card.value);
+					suits.push(card.suit);
+				} else {
+					throw "Invalid card: " + card;
+				}
+			});
+
+			// Sort values numerically
+			return { 
+				values: this.sortValuesNumerically(values), 
+				suits: suits 
+			};
+		}
+		catch(err) {
+			console.log(err);
+		}
+	}
+
+    // Function to sort array of values in numerical order
+	sortValuesNumerically(values) {
+		function sortNumber(a,b) {
+			// use index of the VALUES list
+			return constants.VALUES.indexOf(a) - constants.VALUES.indexOf(b);
+		}
+
+		return values.sort(sortNumber);
+	}
+
     handleCardChange = (e) => {
-        let cardId = e.target.id,
+        const cardId = e.target.id,
             key = e.target.name;
 
         const cards = this.state.cards;
         cards[cardId][key] = e.target.value;
 
+        const { rank, flush, straight, pairs, threes, fours } = this.rankHand(cards);
+
         this.setState({
-            cards,
+            cards: cards,
+            rank: rank,
+            flush: flush,
+            straight: straight,
+            pairs: pairs,
+            threes: threes,
+            fours: fours
         });
     }
 
@@ -376,6 +395,7 @@ class PokerHandContainer extends Component {
         return (
             <PokerHand>
                 {this.state.cards.map( (card, i) => <Card key={i} id={i} value={card.value} suit={card.suit} onChange={this.handleCardChange} />) }
+                <HandRank rank={this.state.rank} />
             </PokerHand>
         );
     }
