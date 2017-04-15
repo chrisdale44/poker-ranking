@@ -15,5 +15,5 @@ export default function HandRank(props) {
 }
 
 HandRank.propTypes = {
-    rank: PropTypes.string
+    rank: PropTypes.number
 };
