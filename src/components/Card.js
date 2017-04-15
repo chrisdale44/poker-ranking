@@ -57,15 +57,17 @@ const Suit = styled(Value)`
 `;
 
 export default function Card(props) {
+    const { value, suit } = props.card;
+
     return (
         <Wrapper>
             <Value>
-                <select onChange={props.onChange} value={props.value} id={props.id} name='value'>
+                <select onChange={props.onChange} data-handid={props.handId} value={value} id={props.cardId} name='value'>
                     {constants.VALUES.map((value, i) => <option key={i} value={value}>{value}</option>)}
                 </select>
             </Value>
             <Suit>
-                <select onChange={props.onChange} value={props.suit} id={props.id} name='suit'>
+                <select onChange={props.onChange} data-handid={props.handId} value={suit} id={props.cardId} name='suit'>
                     {constants.SUITS.map((suit, i) => <option key={i} value={suit}>{constants.SUIT_ICONS[suit]}</option>)}
                 </select>
             </Suit>
@@ -74,8 +76,11 @@ export default function Card(props) {
 }
 
 Card.propTypes = {
-    onChange: PropTypes.func,
-    value: PropTypes.oneOf(constants.VALUES),
-    suit: PropTypes.oneOf(constants.SUITS),
-    id: PropTypes.number
+    cardId: PropTypes.number.isRequired,
+    handId: PropTypes.number.isRequired,
+    card: PropTypes.shape({
+        value: PropTypes.oneOf(constants.VALUES),
+        suit: PropTypes.oneOf(constants.SUITS),
+    }).isRequired,
+    onChange: PropTypes.func.isRequired,
 }
