@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import * as _ from 'lodash';
 import styled from 'styled-components';
 
-import * as constants from './constants/constants';
-import rankHand from './utils/rankHand';
-import compareHands from './utils/compareHands';
-import PokerHand from './components/PokerHand';
-import Result from './components/Result';
-import './App.css';
+import * as constants from '../constants/constants';
+import rankHand from '../utils/rankHand';
+import compareHands from '../utils/compareHands';
+import PokerHand from '../components/PokerHand';
+import Result from '../components/Result';
 
 const AppContainer = styled.div`
   background-color: #222;
