@@ -15,16 +15,12 @@ export default function compareHands(hand_a, hand_b) {
 	}
 		
 	let result = compareValues(hand_a.rank, hand_b.rank, true);
-	console.log(result);
 
 	if (result !== 3) {
 		return result;
 	} else {
 		// check whether hands have the exactly same values
-		// if (_.isEmpty(_.differenceWith(hand_a.cards, hand_b.cards, _.isEqual))) {
-		console.log(hand_a.values, hand_b.values)
 		if (_.isEmpty(_.xor(hand_a.values, hand_b.values))) {
-			console.log('exact match')
 			return constants.RESULT.tie;
 		}
 

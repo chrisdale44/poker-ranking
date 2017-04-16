@@ -101,14 +101,10 @@ class App extends Component {
 		this.setState({
 			_state
 		});
-  }
-
-  
-
-    
+  	}
 
 	getResultText = (result) => {
-		switch (this.state.result) {
+		switch (result) {
 			case 1:
 				return `${this.state.pokerHands[0].name} wins`;
 			case 2:
@@ -116,8 +112,7 @@ class App extends Component {
 			case 3:
 				return `Tie`;
 			default:
-				return `unknown`;
-      			//throw new Error('Unknown result: ' + this.state.result)
+      			throw new Error('Unknown result: ' + result)
 		}
 	};
 

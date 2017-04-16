@@ -11,7 +11,6 @@ const PokerHandContainer = styled.div`
 `;
 
 export default function PokerHand(props) {
-    console.log(props.data)
     const { handId, name, cards, rank } = props.data;
 
     return (
