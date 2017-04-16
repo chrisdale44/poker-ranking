@@ -14,5 +14,5 @@ export default function HandLabel(props) {
 }
 
 HandLabel.propTypes = {
-    name: PropTypes.string
+    name: PropTypes.string.isRequired
 };
