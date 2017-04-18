@@ -1,4 +1,7 @@
 // Define constants
+export const NO_OF_HANDS = 2;
+export const CARDS_PER_HAND = 5;
+
 export const RESULT = {
     "win": 1, 
     "loss": 2, 
@@ -14,10 +17,10 @@ export const SUITS = [
 ];
 
 export const SUIT_ICONS = {
-    S: "\u2660",
-    H: "\u2665",
-    D: "\u2666",
-    C: "\u2665"
+    S: "♠️",
+    H: "♥️",
+    D: "♦️",
+    C: "♣️"
 };
 
 export const HAND_RANKS = [

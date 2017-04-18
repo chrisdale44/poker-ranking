@@ -119,9 +119,7 @@ export default function rankHand(hand) {
 		straight: straight,
 		pairs: pairs,
 		threes: threes,
-		fours: fours,
-		values: values,
-		suits: suits
+		fours: fours
 	};
 
 	// Function to take PokerHand object and return arrays of values and suits

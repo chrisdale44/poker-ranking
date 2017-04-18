@@ -20,7 +20,8 @@ export default function compareHands(hand_a, hand_b) {
 		return result;
 	} else {
 		// check whether hands have the exactly same values
-		if (_.isEmpty(_.xor(hand_a.values, hand_b.values))) {
+		if (_.isEmpty(_.differenceWith(hand_a.cards, hand_b.cards, _.isEqual))) {
+		// if (_.isEmpty(_.xor(hand_a.values, hand_b.values))) {
 			return constants.RESULT.tie;
 		}
 
@@ -153,11 +154,11 @@ export default function compareHands(hand_a, hand_b) {
 	}
 
 	function compareKickers() {
-		var i = (hand_a.values.length - 1);
+		var i = (hand_a.cards.length - 1);
 		// Loop over the arrays of value starting at the top
 		while (i >= 0 && result === 3) {
 			// if we get one that isn't a tie then the loop stops
-			result = compareValues(hand_a.values[i], hand_b.values[i]);
+			result = compareValues(hand_a.cards[i].value, hand_b.cards[i].value);
 			i--;
 		}
 		return result;
