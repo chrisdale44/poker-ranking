@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  display: inline-block;
-  padding: 5px;
+    flex-grow: 0;
+    display: inline-block;
+    padding: 5px;
 `;
 
 export const Value = styled.div`

@@ -7,7 +7,8 @@ import Card from '../components/Card';
 import HandRank from '../components/HandRank';
 
 const PokerHandContainer = styled.div`
-  text-align: center;
+    display: flex;
+    align-items: center;
 `;
 
 export default function PokerHand(props) {

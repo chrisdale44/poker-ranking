@@ -4,13 +4,23 @@ import styled from 'styled-components';
 import * as constants from '../constants/constants';
 
 const Rank = styled.div`
-  display: inline-block;
-  color: white
+    flex-grow: 1;
+    position: relative;
+    margin-left: 10px;
+    text-align: left;
+    
+    > span {
+        position: absolute;
+        left: 0;
+        color: white;
+        text-transform: capitalize;
+        
+    }
 `;
 
 export default function HandRank(props) {
     return (
-        <Rank>{constants.HAND_RANKS[props.rank]}</Rank>
+        <Rank><span>{constants.HAND_RANKS[props.rank]}</span></Rank>
     );
 }
 

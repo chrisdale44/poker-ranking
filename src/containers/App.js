@@ -12,6 +12,7 @@ import Result from '../components/Result';
 const AppContainer = styled.div`
   background-color: darkgreen;
   padding: 20px 0;
+  text-align: center;
 `;
 
 const AppHeading = styled.h1`
