@@ -4,10 +4,10 @@ import * as constants from '../constants/constants';
 export default function compareHands(hand_a, hand_b) {
 	try {
 		if (!hand_a || typeof hand_a.rank === 'undefined') {
-			throw "Hand A invalid";
+			throw new Error("Hand A invalid");
 		}
 		if (!hand_b || typeof hand_b.rank === 'undefined') {
-			throw "Hand B hand invalid";
+			throw new Error("Hand B hand invalid");
 		}
 	}
 	catch(err) { 
@@ -37,7 +37,6 @@ export default function compareHands(hand_a, hand_b) {
 					// compare kickers
 					return compareKickers();
 				}
-				break;
 			case 2:
 				// compare top pairs
 				result = compareValues(hand_a.pairs[1], hand_b.pairs[1]);
@@ -54,7 +53,6 @@ export default function compareHands(hand_a, hand_b) {
 						return compareKickers();
 					}
 				}
-				break;
 			case 3:
 				// compare three of a kinds
 				result = compareValues(hand_a.threes[0], hand_b.threes[0]);
@@ -65,15 +63,12 @@ export default function compareHands(hand_a, hand_b) {
 					// compare kickers
 					return compareKickers();
 				}
-				break;
 			case 4:
 				// compare top card of straights
 				return compareValues(hand_a.values[4], hand_b.values[4]);
-				break;
 			case 5:
 				// compare top card of flushes
 				return compareKickers();
-				break;
 			case 6:
 				// compare full houses
 				// compare three of a kinds
@@ -82,7 +77,7 @@ export default function compareHands(hand_a, hand_b) {
 				if (result !== 3) {
 					return result;
 				} else {
-					// compare second pairs
+					// compare pairs
 					result = compareValues(hand_a.pairs[0], hand_b.pairs[0]);
 					if (result !== 3) {
 						return result;
@@ -91,22 +86,6 @@ export default function compareHands(hand_a, hand_b) {
 						return compareKickers();
 					}
 				}
-				result = compareValues(hand_a.pairs[1], hand_b.pairs[1]);
-
-				if (result !== 3) {
-					return result;
-				} else {
-					// compare second pairs
-					result = compareValues(hand_a.pairs[0], hand_b.pairs[0]);
-					if (result !== 3) {
-						return result;
-					} else {
-						// compare kickers
-						return compareKickers();
-					}
-				}
-
-				break;
 			case 7:
 				// compare four of a kinds
 				result = compareValues(hand_a.fours[0], hand_b.fours[0]);
@@ -117,22 +96,19 @@ export default function compareHands(hand_a, hand_b) {
 					// compare kickers
 					return compareKickers();
 				}
-				break;
 			case 8:
 				// compare top card of straight flushes
 				return compareValues(hand_a.values[4], hand_b.values[4]);
-				break;
 			case 9:
 				// we know Royal flushes are equal
 				return constants.RESULT.tie;
-				break;
 			case 0:
 				// compare high card
 				return compareKickers();
-				break;
+			default:
+				return false;
 
 		}
-		return constants.RESULT.tie;
 	}
 
 	function compareValues(a, b, noIndex) {

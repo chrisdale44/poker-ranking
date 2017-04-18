@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import * as constants from '../constants/constants';
 
 const Wrapper = styled.div`
   display: block;
@@ -9,7 +8,6 @@ const Wrapper = styled.div`
   padding: 5px;
   color: white;
 `;
-
 
 export default function Card(props) {
     return (

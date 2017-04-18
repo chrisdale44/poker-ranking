@@ -37,8 +37,7 @@ export default function rankHand(hand) {
 					fours.push(k);
 					break;
 				default:
-					// do nothing
-					break;
+					return false;
 			}
 		});
 	}
@@ -128,11 +127,11 @@ export default function rankHand(hand) {
 		try {
 			// Validate the input
 			if (!hand) {
-				throw "No hand specified";
+				throw new Error("No hand specified");
 			}
 
 			if (hand.length !== 5) {
-				throw "Invalid number of cards";
+				throw new Error("Invalid number of cards");
 			}
 
 			var values = [],
@@ -147,7 +146,7 @@ export default function rankHand(hand) {
 					values.push(card.value);
 					suits.push(card.suit);
 				} else {
-					throw `Invalid card: ${card.value}, ${card.suit}`;
+					throw new Error(`Invalid card: ${card.value}, ${card.suit}`);
 				}
 			});
 
