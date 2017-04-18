@@ -14,7 +14,7 @@ const Rank = styled.div`
         left: 0;
         color: white;
         text-transform: capitalize;
-        
+        top: -9px;
     }
 `;
 

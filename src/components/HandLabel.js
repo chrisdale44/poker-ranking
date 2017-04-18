@@ -14,6 +14,7 @@ const Label = styled.div`
         color: white;
         text-transform: capitalize;
         right: 0;
+        top: -9px;
     }
 
 `;
