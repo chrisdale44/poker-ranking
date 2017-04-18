@@ -27,12 +27,6 @@ class App extends Component {
 		
 	}
 
-	handleRefresh = (e) => {
-		this.setState(
-			this.newPokerHands()
-		);
-	}
-
 	newPokerHands() {
 		let pokerHands = generateHand(constants.NO_OF_HANDS);
 
@@ -93,6 +87,12 @@ class App extends Component {
 		);
   	}
 
+	handleRefresh = (e) => {
+		this.setState(
+			this.newPokerHands()
+		);
+	}
+
 	getResultText = (result) => {
 		switch (result) {
 			case 1:
@@ -110,11 +110,8 @@ class App extends Component {
 		return (
 			<AppContainer>
 				<AppHeading>Poker Hand Comparison</AppHeading>
-				
 				{ this.state.pokerHands.map((pokerHand, i) => <PokerHand key={i} data={pokerHand} onChange={this.handleCardChange} /> ) }
-				
 				<Result result={this.getResultText(this.state.result)} />
-
 				<button onClick={this.handleRefresh}>Refresh</button>
 			</AppContainer>
 		);

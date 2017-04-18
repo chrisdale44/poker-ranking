@@ -21,7 +21,6 @@ export default function compareHands(hand_a, hand_b) {
 	} else {
 		// check whether hands have the exactly same values
 		if (_.isEmpty(_.differenceWith(hand_a.cards, hand_b.cards, _.isEqual))) {
-		// if (_.isEmpty(_.xor(hand_a.values, hand_b.values))) {
 			return constants.RESULT.tie;
 		}
 
