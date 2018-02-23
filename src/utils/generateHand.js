@@ -2,7 +2,14 @@ import * as _ from 'lodash';
 import * as constants from '../constants';
 import randomNumberGenerator from './randomNumberGenerator';
 
-export default function generateHand(n) {
+export const generateCard = () => {
+    return {
+        value: constants.VALUES[randomNumberGenerator(0, constants.VALUES.length-1)],
+        suit: constants.SUITS[randomNumberGenerator(0, constants.SUITS.length-1)]
+    }
+}
+
+export const generateHand = (n) => {
     let pokerHands = [],
         cards;
 
@@ -20,12 +27,7 @@ export default function generateHand(n) {
     }
 
     return pokerHands;
-
-    function generateCard() {
-        return {
-            value: constants.VALUES[randomNumberGenerator(0, constants.VALUES.length-1)],
-            suit: constants.SUITS[randomNumberGenerator(0, constants.SUITS.length-1)]
-        }
-    }
 }
+
+export default generateHand;
 

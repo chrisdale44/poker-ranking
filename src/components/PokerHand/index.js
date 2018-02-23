@@ -5,7 +5,7 @@ import Card from '../Card';
 import HandRank from '../HandRank';
 import { Container } from './styles';
 
-export default function PokerHand(props) {
+export const PokerHand = (props) => {
     const { handId, name, cards, rank } = props.data;
 
     return (
@@ -23,3 +23,5 @@ PokerHand.propTypes = {
     data: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired
 };
+
+export default PokerHand;

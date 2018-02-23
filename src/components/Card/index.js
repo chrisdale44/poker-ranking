@@ -4,7 +4,7 @@ import * as constants from '../../constants';
 
 import { Wrapper, Value, Suit } from './style';
 
-export default function Card(props) {
+export const Card = (props) => {
     const { value, suit } = props.card;
 
     return (
@@ -32,3 +32,5 @@ Card.propTypes = {
     }).isRequired,
     onChange: PropTypes.func.isRequired,
 }
+
+export default Card;

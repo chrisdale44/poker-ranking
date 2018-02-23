@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Label } from './styles';
 
-export default function HandLabel(props) {
+export const HandLabel = (props) => {
     return (
         <Label><span>{props.name}</span></Label>
     );
@@ -11,3 +11,5 @@ export default function HandLabel(props) {
 HandLabel.propTypes = {
     name: PropTypes.string.isRequired
 };
+
+export default HandLabel;

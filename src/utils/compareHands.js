@@ -1,14 +1,42 @@
 import * as _ from 'lodash';
 import * as constants from '../constants';
 
-export default function compareHands(hand_a, hand_b) {
+export const validateHand = (hand) => {
+	if (!hand || typeof hand.rank === 'undefined') {
+		throw new Error("Hand A invalid");
+	}
+}
+
+export const compareValues = (a, b, noIndex) => {
+	// Unless noIndex is true, use indexes of each value
+	a = (noIndex) ? a : constants.VALUES.indexOf(a);
+	b = (noIndex) ? b : constants.VALUES.indexOf(b);
+
+	// check which value is higher
+	if (a > b) {
+		return constants.RESULT.win;
+	} else if (a < b) {
+		return constants.RESULT.loss;
+	} else if (a === b) {
+		return constants.RESULT.tie;
+	}
+}
+
+export const compareKickers = (hand_a, hand_b, result) => {
+	var i = (hand_a.cards.length - 1);
+	// Loop over the arrays of value starting at the top
+	while (i >= 0 && result === 3) {
+		// if we get one that isn't a tie then the loop stops
+		result = compareValues(hand_a.cards[i].value, hand_b.cards[i].value);
+		i--;
+	}
+	return result;
+}
+
+export const compareHands = (hand_a, hand_b) => {
 	try {
-		if (!hand_a || typeof hand_a.rank === 'undefined') {
-			throw new Error("Hand A invalid");
-		}
-		if (!hand_b || typeof hand_b.rank === 'undefined') {
-			throw new Error("Hand B hand invalid");
-		}
+		validateHand(hand_a);
+		validateHand(hand_b);
 	}
 	catch(err) { 
 		console.log(err);
@@ -33,8 +61,7 @@ export default function compareHands(hand_a, hand_b) {
 				if (result !== 3) {
 					return result;
 				} else {
-					// compare kickers
-					return compareKickers();
+					return compareKickers(hand_a, hand_b, result);
 				}
 			case 2:
 				// compare top pairs
@@ -48,8 +75,7 @@ export default function compareHands(hand_a, hand_b) {
 					if (result !== 3) {
 						return result;
 					} else {
-						// compare kickers
-						return compareKickers();
+						return compareKickers(hand_a, hand_b, result);
 					}
 				}
 			case 3:
@@ -59,15 +85,14 @@ export default function compareHands(hand_a, hand_b) {
 				if (result !== 3) {
 					return result;
 				} else {
-					// compare kickers
-					return compareKickers();
+					return compareKickers(hand_a, hand_b, result);
 				}
 			case 4:
 				// compare top card of straights
 				return compareValues(hand_a.values[4], hand_b.values[4]);
 			case 5:
 				// compare top card of flushes
-				return compareKickers();
+				return compareKickers(hand_a, hand_b, result);
 			case 6:
 				// compare full houses
 				// compare three of a kinds
@@ -81,8 +106,7 @@ export default function compareHands(hand_a, hand_b) {
 					if (result !== 3) {
 						return result;
 					} else {
-						// compare kickers
-						return compareKickers();
+						return compareKickers(hand_a, hand_b, result);
 					}
 				}
 			case 7:
@@ -92,8 +116,7 @@ export default function compareHands(hand_a, hand_b) {
 				if (result !== 3) {
 					return result;
 				} else {
-					// compare kickers
-					return compareKickers();
+					return compareKickers(hand_a, hand_b, result);
 				}
 			case 8:
 				// compare top card of straight flushes
@@ -103,39 +126,11 @@ export default function compareHands(hand_a, hand_b) {
 				return constants.RESULT.tie;
 			case 0:
 				// compare high card
-				return compareKickers();
+				return compareKickers(hand_a, hand_b, result);
 			default:
 				return false;
-
 		}
-	}
-
-	function compareValues(a, b, noIndex) {
-		// Unless noIndex is true, use indexes of each value
-		a = (noIndex) ? a : constants.VALUES.indexOf(a);
-		b = (noIndex) ? b : constants.VALUES.indexOf(b);
-
-		// check which value is higher
-		if (a > b) {
-			// win
-			return constants.RESULT.win;
-		} else if (a < b) {
-			// loss
-			return constants.RESULT.loss;
-		} else if (a === b) {
-			// tie 
-			return constants.RESULT.tie;
-		}
-	}
-
-	function compareKickers() {
-		var i = (hand_a.cards.length - 1);
-		// Loop over the arrays of value starting at the top
-		while (i >= 0 && result === 3) {
-			// if we get one that isn't a tie then the loop stops
-			result = compareValues(hand_a.cards[i].value, hand_b.cards[i].value);
-			i--;
-		}
-		return result;
 	}
 }
+
+export default compareHands;

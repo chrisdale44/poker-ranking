@@ -1,7 +1,54 @@
 import * as _ from 'lodash';
 import * as constants from '../constants';
 
-export default function rankHand(hand) {
+export const sortValuesNumerically = (values) => {
+	const sortNumber = (a, b) => {
+		return constants.VALUES.indexOf(a) - constants.VALUES.indexOf(b);
+	}
+
+	return values.sort(sortNumber);
+}
+
+// Function to take PokerHand object and return arrays of values and suits
+// as this makes life easier when ranking hands
+export const parseHand = (hand) => {
+	try {
+		// Validate the input
+		if (!hand) {
+			throw new Error("No hand specified");
+		}
+
+		if (hand.length !== 5) {
+			throw new Error("Invalid number of cards");
+		}
+
+		var values = [],
+			suits = [];
+
+		// Loop over the cards array and split value and suit into separate arrays
+		hand.forEach(function(card, i) {
+			
+			if (_.includes(constants.VALUES, card.value) && _.includes(constants.SUITS, card.suit)) {
+				// It is not important to keep value and suit related as the only 
+				// time suit comes into play is if all 5 cards are of one suit
+				values.push(card.value);
+				suits.push(card.suit);
+			} else {
+				throw new Error(`Invalid card: ${card.value}, ${card.suit}`);
+			}
+		});
+
+		return { 
+			values: sortValuesNumerically(values), 
+			suits: suits 
+		};
+	}
+	catch(err) {
+		console.log(err);
+	}
+}
+
+const rankHand = (hand) => {
 	let { values, suits } = parseHand(hand);
 	
 	var matchingValues = _.countBy(values),
@@ -120,56 +167,7 @@ export default function rankHand(hand) {
 		threes: threes,
 		fours: fours
 	};
-
-	// Function to take PokerHand object and return arrays of values and suits
-	// as this makes life easier when ranking hands
-	function parseHand(hand) {
-		try {
-			// Validate the input
-			if (!hand) {
-				throw new Error("No hand specified");
-			}
-
-			if (hand.length !== 5) {
-				throw new Error("Invalid number of cards");
-			}
-
-			var values = [],
-				suits = [];
-
-			// Loop over the cards array and split value and suit into separate arrays
-			hand.forEach(function(card, i) {
-				
-				if (_.includes(constants.VALUES, card.value) && _.includes(constants.SUITS, card.suit)) {
-					// It is not important to keep value and suit related as the only 
-					// time suit comes into play is if all 5 cards are of one suit
-					values.push(card.value);
-					suits.push(card.suit);
-				} else {
-					throw new Error(`Invalid card: ${card.value}, ${card.suit}`);
-				}
-			});
-
-			// Sort values numerically
-			return { 
-				values: sortValuesNumerically(values), 
-				suits: suits 
-			};
-		}
-		catch(err) {
-			console.log(err);
-		}
-	}
-
-	// Function to sort array of values in numerical order
-	function sortValuesNumerically(values) {
-		function sortNumber(a, b) {
-			// use index of the VALUES list
-			return constants.VALUES.indexOf(a) - constants.VALUES.indexOf(b);
-		}
-
-		return values.sort(sortNumber);
-	}
 }
 
+export default rankHand;
 	
