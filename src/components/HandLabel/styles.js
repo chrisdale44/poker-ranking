@@ -1,8 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Label = styled.div`
+export const Label = styled.div`
     flex-grow: 1;
     position: relative;
     display: inline-block;
@@ -18,13 +16,3 @@ const Label = styled.div`
     }
 
 `;
-
-export default function HandLabel(props) {
-    return (
-        <Label><span>{props.name}</span></Label>
-    );
-}
-
-HandLabel.propTypes = {
-    name: PropTypes.string.isRequired
-};

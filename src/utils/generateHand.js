@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import * as constants from '../constants/constants';
+import * as constants from '../constants';
 import randomNumberGenerator from './randomNumberGenerator';
 
 export default function generateHand(n) {

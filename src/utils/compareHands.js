@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import * as constants from '../constants/constants';
+import * as constants from '../constants';
 
 export default function compareHands(hand_a, hand_b) {
 	try {

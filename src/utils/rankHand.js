@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import * as constants from '../constants/constants';
+import * as constants from '../constants';
 
 export default function rankHand(hand) {
 	let { values, suits } = parseHand(hand);

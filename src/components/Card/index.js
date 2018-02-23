@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as constants from '../../constants/constants';
+import * as constants from '../../constants';
 
 import { Wrapper, Value, Suit } from './style';
 

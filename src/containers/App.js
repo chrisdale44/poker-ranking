@@ -1,31 +1,18 @@
 import React, { Component } from 'react';
 import * as _ from 'lodash';
-import styled from 'styled-components';
 
-import * as constants from '../constants/constants';
+import * as constants from '../constants';
 import generateHand from '../utils/generateHand';
 import rankHand from '../utils/rankHand';
 import compareHands from '../utils/compareHands';
 import PokerHand from '../components/PokerHand';
 import Result from '../components/Result';
-
-const AppContainer = styled.div`
-  background-color: darkgreen;
-  padding: 20px 0;
-  text-align: center;
-`;
-
-const AppHeading = styled.h1`
-  color: white;
-  text-align: center;
-`;
-
+import { AppContainer, AppHeading } from './styles';
 
 class App extends Component {
 	constructor(props) {
 		super();
 		this.state = this.newPokerHands();
-		
 	}
 
 	newPokerHands() {

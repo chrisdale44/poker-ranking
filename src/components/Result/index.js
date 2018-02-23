@@ -1,13 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  display: block;
-  text-align: center;
-  padding: 5px;
-  color: white;
-`;
+import { Wrapper } from './styles';
 
 export default function Card(props) {
     return (
